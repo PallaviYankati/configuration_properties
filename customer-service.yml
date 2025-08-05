@@ -18,3 +18,8 @@ spring:
 
 server:
   port: 9091
+
+api:
+  gateway:
+    url: http://api-gateway
+    token: your-jwt-token-or-api-key
