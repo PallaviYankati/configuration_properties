@@ -37,3 +37,4 @@ spring:
 
 server:
   port: 9091
+greeting: Hello from Config Server
