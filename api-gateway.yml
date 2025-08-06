@@ -1,0 +1,54 @@
+server:
+  port: 3333
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: pallavi
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        transaction:
+          jta:
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  cloud:
+    gateway:
+      routes:
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/customer/**
+        - id: item-service
+          uri: lb://ITEM-SERVICE
+          predicates:
+            - Path=/item/**
+        - id: sales-order-service
+          uri: lb://SALES-ORDER-SERVICE
+          predicates:
+            - Path=/sales-order-service/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8585/eureka/
+
+jwt:
+  secret: 8738e025461aee46137790fe1c535e3126e7f27965cb79d58accaf3c509a799f
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
